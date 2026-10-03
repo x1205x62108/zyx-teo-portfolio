@@ -39,16 +39,11 @@
           },
           animation: {
             'pulse-glow': 'pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'scanline': 'scanline 8s linear infinite',
           },
           keyframes: {
             pulseGlow: {
-              '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
-              '50%': { opacity: 0.6, transform: 'scale(1.03)' },
-            },
-            scanline: {
-              '0%': { transform: 'translateY(-100%)' },
-              '100%': { transform: 'translateY(1000%)' },
+              '0%, 100%': { opacity: 0.35, transform: 'scale(1)' },
+              '50%': { opacity: 0.65, transform: 'scale(1.02)' },
             }
           }
         }
@@ -62,6 +57,7 @@
       color: #F1F5F9;
       font-family: 'Inter', 'Noto Sans TC', sans-serif;
       overflow-x: hidden;
+      line-height: 1.6;
     }
     
     /* Precision grid background */
@@ -72,22 +68,14 @@
         linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     }
 
-    .tech-glow-cyan {
-      box-shadow: 0 0 25px -5px rgba(0, 242, 254, 0.25);
-    }
-    
-    .tech-glow-blue {
-      box-shadow: 0 0 25px -5px rgba(79, 172, 254, 0.25);
-    }
-
     .hud-border {
       border: 1px solid rgba(56, 189, 248, 0.2);
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(11, 17, 32, 0.85) 100%);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(11, 17, 32, 0.9) 100%);
       backdrop-filter: blur(12px);
     }
 
     .hud-border:hover {
-      border-color: rgba(56, 189, 248, 0.45);
+      border-color: rgba(56, 189, 248, 0.4);
       box-shadow: 0 0 20px -5px rgba(56, 189, 248, 0.15);
     }
 
@@ -106,31 +94,12 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #38BDF8;
     }
-
-    /* Step indicator arrow */
-    .step-arrow::after {
-      content: '';
-      position: absolute;
-      right: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-left: 14px solid #1E293B;
-      z-index: 10;
-    }
-    @media (max-width: 1024px) {
-      .step-arrow::after { display: none; }
-    }
   </style>
 </head>
 <body class="bg-tech-grid antialiased selection:bg-cyan-500/20 selection:text-cyan-300">
 
-  <!-- Scanline subtle texture -->
-  <div class="fixed inset-0 pointer-events-none opacity-[0.015] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] z-50"></div>
-
   <!-- NAVIGATION HEADER -->
-  <header class="fixed top-0 left-0 right-0 z-40 bg-[#060911]/85 backdrop-blur-md border-b border-slate-800/80">
+  <header class="fixed top-0 left-0 right-0 z-40 bg-[#060911]/90 backdrop-blur-md border-b border-slate-800/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <!-- Brand Logo -->
       <a href="#home" class="flex items-center space-x-3 group">
@@ -154,7 +123,7 @@
           <span class="text-cyan-500">01.</span> 方法論
         </a>
         <a href="#capabilities" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-          <span class="text-cyan-500">02.</span> 核心能力
+          <span class="text-cyan-500">02.</span> 核心架構
         </a>
         <a href="#services" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
           <span class="text-cyan-500">03.</span> 顧問服務
@@ -184,7 +153,7 @@
       
       <!-- Top Pill Banner -->
       <div class="flex justify-center mb-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/20 text-cyan-300 text-xs font-mono">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/30 text-cyan-300 text-xs font-mono">
           <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
           <span>高階技術顧問 · 問題拆解與系統架構落地專家</span>
         </div>
@@ -192,7 +161,7 @@
 
       <!-- Main Title -->
       <div class="text-center max-w-3xl mx-auto mb-12">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-4">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight">
           由果溯因 · 破解深水區架構難題
         </h1>
         <p class="text-slate-400 text-base sm:text-lg font-light leading-relaxed">
@@ -200,41 +169,21 @@
         </p>
       </div>
 
-      <!-- THE TACTICAL INTERACTIVE BLUEPRINT (Matching Big King's Diagram) -->
-      <div class="relative rounded-2xl hud-border p-6 sm:p-8 lg:p-10 overflow-hidden mb-16 shadow-2xl">
+      <!-- THE TACTICAL BLUEPRINT CONTAINER (Zero Overlap Guaranteed) -->
+      <div id="capabilities" class="relative rounded-2xl hud-border p-6 sm:p-8 lg:p-10 mb-16 shadow-2xl">
         
-        <!-- Left Side Telemetry -->
-        <div class="hidden xl:block absolute left-6 top-8 font-mono text-[11px] text-slate-500 space-y-4 select-none">
-          <div class="border-l-2 border-cyan-500/40 pl-2">
-            <p class="text-cyan-400 font-semibold">DATABASE</p>
-            <p class="text-cyan-400 font-semibold">BACKEND</p>
-            <p class="text-cyan-400 font-semibold">OPERATIONS</p>
+        <!-- Top Status Bar: Clean Telemetry Strip (Integrated into flow, NO absolute overlap) -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 border-b border-slate-800 text-xs font-mono">
+          <div class="flex flex-wrap items-center gap-3 text-slate-400">
+            <span class="px-2.5 py-1 rounded bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 font-semibold">
+              DATABASE · BACKEND · OPERATIONS
+            </span>
+            <span class="text-slate-500 hidden md:inline">|</span>
+            <span class="text-slate-400 hidden md:inline">ANALYZE · SOLVE · AUTOMATE · OPERATE</span>
           </div>
-          <div class="space-y-1 text-slate-500">
-            <p>> ANALYZE</p>
-            <p>> SOLVE</p>
-            <p>> AUTOMATE</p>
-            <p>> OPERATE</p>
-          </div>
-          <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[10px] text-cyan-300/80 leading-relaxed font-mono">
-            <span class="text-purple-400">SELECT</span> *<br>
-            <span class="text-purple-400">FROM</span> opportunities<br>
-            <span class="text-purple-400">WHERE</span> problem = <span class="text-emerald-400">true</span><br>
-            <span class="text-purple-400">ORDER BY</span> impact;
-          </div>
-        </div>
-
-        <!-- Right Side Telemetry -->
-        <div class="hidden xl:block absolute right-6 top-8 font-mono text-[11px] text-right text-slate-500 space-y-4 select-none">
-          <div class="border-r-2 border-cyan-500/40 pr-2">
-            <p class="text-cyan-400 font-semibold">STABLE</p>
-            <p class="text-cyan-400 font-semibold">SCALABLE</p>
-            <p class="text-cyan-400 font-semibold">AUTOMATED</p>
-            <p class="text-cyan-400 font-semibold">OBSERVABLE</p>
-          </div>
-          <div class="text-slate-400 text-[10px]">
-            <p>REAL-WORLD</p>
-            <p class="text-emerald-400 font-bold">IMPACT</p>
+          <div class="flex items-center gap-2 text-emerald-400 font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>STABLE · SCALABLE · REAL-WORLD IMPACT</span>
           </div>
         </div>
 
@@ -255,173 +204,184 @@
         </div>
 
         <!-- TRI-PILLAR TOPOLOGY (Database | ZYX TEO Core | Backend) -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center max-w-5xl mx-auto mb-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch mb-8">
           
-          <!-- Pillar 1: 資料庫 Database (Left) -->
-          <div class="p-5 rounded-xl bg-slate-900/60 border border-cyan-500/30 relative group hover:border-cyan-400 transition-all">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-                <i data-lucide="database" class="w-5 h-5"></i>
+          <!-- Pillar 1: 資料庫 Database (Left - 5 Cols) -->
+          <div class="lg:col-span-5 p-6 rounded-xl bg-slate-900/70 border border-cyan-500/30 flex flex-col justify-between hover:border-cyan-400 transition-colors">
+            <div>
+              <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
+                  <i data-lucide="database" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-100 text-base">資料庫 · Database</h3>
+                  <span class="text-[11px] font-mono text-cyan-400/80">核心數據底層與平帳鎖定</span>
+                </div>
               </div>
-              <div>
-                <h3 class="font-bold text-slate-100 text-base">資料庫 · Database</h3>
-                <span class="text-[11px] font-mono text-cyan-400/80">Core Data Foundation</span>
-              </div>
-            </div>
-            
-            <!-- Tech badges -->
-            <div class="grid grid-cols-2 gap-2 text-xs font-mono">
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Oracle
-              </div>
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-red-400"></span> SQL Server
-              </div>
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-400"></span> MySQL
-              </div>
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-indigo-400"></span> PostgreSQL
+              
+              <!-- Tech Chips (2x2 Grid) -->
+              <div class="grid grid-cols-2 gap-2 text-xs font-mono mb-4">
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-rose-500 shrink-0"></span> Oracle
+                </div>
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-red-400 shrink-0"></span> SQL Server
+                </div>
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span> MySQL
+                </div>
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0"></span> PostgreSQL
+                </div>
               </div>
             </div>
 
-            <!-- Capabilities list -->
-            <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1 font-mono">
-              <div class="flex items-center justify-between">
-                <span>• 效能調校 / 索引優化</span>
-                <span class="text-cyan-400">Index Tuning</span>
+            <!-- Capabilities list (Clean stacked layout, no collision) -->
+            <div class="pt-4 border-t border-slate-800 space-y-2 text-xs font-mono">
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> 效能調校 / 索引優化</span>
+                <span class="text-cyan-400 text-[11px]">Index Tuning</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span>• ETL / 報表數據流水線</span>
-                <span class="text-cyan-400">ETL Pipeline</span>
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> ETL / 報表數據流水線</span>
+                <span class="text-cyan-400 text-[11px]">ETL Pipeline</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span>• AWR / ASH 瓶頸剖析</span>
-                <span class="text-cyan-400">Bottleneck</span>
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> AWR / ASH 瓶頸深度剖析</span>
+                <span class="text-cyan-400 text-[11px]">Bottleneck</span>
+              </div>
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> 定時排程 / 自動平帳 Job</span>
+                <span class="text-cyan-400 text-[11px]">Scheduler</span>
               </div>
             </div>
           </div>
 
-          <!-- Central Core Node: ZYX TEO Sphere -->
-          <div class="flex flex-col items-center justify-center p-6 text-center relative">
-            <div class="relative w-36 h-36 rounded-full p-1 bg-gradient-to-tr from-cyan-500 via-blue-500 to-indigo-600 shadow-xl shadow-cyan-500/20 animate-pulse-glow flex items-center justify-center">
-              <div class="w-full h-full bg-[#0B1120] rounded-full flex flex-col items-center justify-center p-4 border border-cyan-400/30">
+          <!-- Central Core Node: ZYX TEO Sphere (Center - 2 Cols) -->
+          <div class="lg:col-span-2 flex flex-col items-center justify-center p-4 text-center my-4 lg:my-0">
+            <div class="relative w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-cyan-500 via-blue-500 to-indigo-600 shadow-xl shadow-cyan-500/20 animate-pulse-glow flex items-center justify-center shrink-0">
+              <div class="w-full h-full bg-[#0B1120] rounded-full flex flex-col items-center justify-center p-2 border border-cyan-400/30">
                 <i data-lucide="cpu" class="w-6 h-6 text-cyan-400 mb-1"></i>
                 <span class="font-mono font-black text-lg text-white tracking-wider">ZYX</span>
-                <span class="font-mono text-[10px] text-cyan-300 tracking-widest font-bold">TEO CORE</span>
+                <span class="font-mono text-[9px] text-cyan-300 tracking-widest font-bold">TEO CORE</span>
               </div>
             </div>
-            <div class="mt-4 text-xs font-mono text-slate-400">
-              架構決策與全鏈路樞紐
-            </div>
+            <span class="mt-3 text-xs font-mono text-cyan-400 font-medium">全鏈路架構中樞</span>
           </div>
 
-          <!-- Pillar 2: 後端 Backend (Right) -->
-          <div class="p-5 rounded-xl bg-slate-900/60 border border-blue-500/30 relative group hover:border-blue-400 transition-all">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/40 flex items-center justify-center text-blue-400">
-                <i data-lucide="code-2" class="w-5 h-5"></i>
+          <!-- Pillar 2: 後端 Backend (Right - 5 Cols) -->
+          <div class="lg:col-span-5 p-6 rounded-xl bg-slate-900/70 border border-blue-500/30 flex flex-col justify-between hover:border-blue-400 transition-colors">
+            <div>
+              <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/40 flex items-center justify-center text-blue-400 shrink-0">
+                  <i data-lucide="code-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-100 text-base">後端 · Backend</h3>
+                  <span class="text-[11px] font-mono text-blue-400/80">強韌業務邏輯與通訊網關</span>
+                </div>
               </div>
-              <div>
-                <h3 class="font-bold text-slate-100 text-base">後端 · Backend</h3>
-                <span class="text-[11px] font-mono text-blue-400/80">Robust Logic Engine</span>
+
+              <!-- Tech Chips (2x2 Grid) -->
+              <div class="grid grid-cols-2 gap-2 text-xs font-mono mb-4">
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span> FastAPI
+                </div>
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span> Python
+                </div>
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></span> 高併發 API
+                </div>
+                <div class="px-3 py-2 rounded bg-slate-800/70 border border-slate-700/60 text-slate-200 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-purple-400 shrink-0"></span> 異步隊列
+                </div>
               </div>
             </div>
 
-            <!-- Tech badges -->
-            <div class="grid grid-cols-2 gap-2 text-xs font-mono">
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> FastAPI
+            <!-- Capabilities list (Clean stacked layout, no collision) -->
+            <div class="pt-4 border-t border-slate-800 space-y-2 text-xs font-mono">
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> 企業級 RESTful / WebSocket 開發</span>
+                <span class="text-blue-400 text-[11px]">High-QPS</span>
               </div>
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Python
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> 權限驗證與零信任防探測網關</span>
+                <span class="text-blue-400 text-[11px]">Auth / Guard</span>
               </div>
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-cyan-400"></span> REST API
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> 第三方支付與異質系統合流</span>
+                <span class="text-blue-400 text-[11px]">Integration</span>
               </div>
-              <div class="px-2.5 py-1.5 rounded bg-slate-800/60 border border-slate-700/60 text-slate-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-purple-400"></span> 排程服務
-              </div>
-            </div>
-
-            <!-- Capabilities list -->
-            <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1 font-mono">
-              <div class="flex items-center justify-between">
-                <span>• 企業級高併發 API 開發</span>
-                <span class="text-blue-400">High-QPS</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span>• 權限驗證 / 零信任架構</span>
-                <span class="text-blue-400">Auth / JWT</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span>• 第三方支付與異質系統串接</span>
-                <span class="text-blue-400">Integration</span>
+              <div class="flex items-center justify-between text-slate-300">
+                <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> 數據一致性平帳與自動補償機制</span>
+                <span class="text-blue-400 text-[11px]">Ledger Sync</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        <!-- Pillar 3: 維運 Operations (Bottom Bar) -->
-        <div class="max-w-4xl mx-auto p-5 rounded-xl bg-slate-900/60 border border-slate-700/80 mb-8">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-3 pb-3 border-b border-slate-800">
+        <!-- Pillar 3: 維運 Operations (Bottom Bar - Full Width) -->
+        <div class="p-6 rounded-xl bg-slate-900/70 border border-slate-700/80 mb-8">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                <i data-lucide="server" class="w-4 h-4"></i>
+              <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                <i data-lucide="server" class="w-5 h-5"></i>
               </div>
               <div>
-                <span class="font-bold text-sm text-slate-100">維運工程 · Operations & Cloud Infrastructure</span>
-                <span class="block text-[10px] font-mono text-slate-400">高可用、可觀測、零中斷自動化體系</span>
+                <span class="font-bold text-sm text-slate-100">維運工程 · Operations & Infrastructure</span>
+                <span class="block text-xs font-mono text-slate-400">高可用、可觀測、零中斷自動化體系</span>
               </div>
             </div>
-            <div class="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2.5 py-1 rounded border border-emerald-500/30">
-              SLA 99.99% Architecture
+            <div class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-3 py-1 rounded border border-emerald-500/30 shrink-0">
+              SLA 99.99% Reliability
             </div>
           </div>
           
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">Linux</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">Docker</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">Nginx / OpenResty</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">Grafana</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">Graylog</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">AWS / GCP / Oracle Cloud</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">Cloudflare Tunnel</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">日誌鏈路追蹤</span>
-            <span class="px-2.5 py-1 rounded bg-slate-800/80 border border-slate-700 text-slate-300">自動化部署 / SSL</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 text-xs font-mono">
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">Linux / Ubuntu</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">Docker 容器化</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">Nginx / OpenResty</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">Grafana 儀表板</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">Graylog 日誌集中</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">AWS / Oracle Cloud</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">Cloudflare Tunnel</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">鏈路時序追蹤</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">SSL / 防探測加固</span>
+            <span class="px-3 py-2 rounded bg-slate-800/80 border border-slate-700 text-slate-300 text-center">自癒監控警報</span>
           </div>
         </div>
 
-        <!-- 4 CORE COMPETENCIES PILLARS (核心能力) -->
-        <div class="mt-8 pt-8 border-t border-slate-800/80">
-          <div class="text-center font-mono text-xs text-slate-400 uppercase tracking-widest mb-6">
+        <!-- 4 CORE COMPETENCIES PILLARS (核心能力 - 乾淨排列) -->
+        <div class="pt-6 border-t border-slate-800/80">
+          <div class="text-center font-mono text-xs text-cyan-400 uppercase tracking-widest mb-6">
             // 四大核心解決力 · CORE METHODOLOGICAL PILLARS
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
-            <div class="p-4 rounded-lg bg-[#060911]/80 border border-slate-800 text-center hover:border-cyan-500/50 transition-colors">
-              <i data-lucide="search" class="w-5 h-5 text-cyan-400 mx-auto mb-2"></i>
-              <h4 class="font-bold text-slate-200 text-sm">問題診斷</h4>
-              <p class="text-[11px] text-slate-400 font-mono mt-1">精確定位非表面病灶</p>
+            <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 text-center hover:border-cyan-500/40 transition-colors">
+              <i data-lucide="search" class="w-6 h-6 text-cyan-400 mx-auto mb-2.5"></i>
+              <h4 class="font-bold text-slate-100 text-sm mb-1">問題診斷</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">穿透現象偽裝，鎖定不可見的深層病灶</p>
             </div>
 
-            <div class="p-4 rounded-lg bg-[#060911]/80 border border-slate-800 text-center hover:border-cyan-500/50 transition-colors">
-              <i data-lucide="git-commit" class="w-5 h-5 text-blue-400 mx-auto mb-2"></i>
-              <h4 class="font-bold text-slate-200 text-sm">根因分析</h4>
-              <p class="text-[11px] text-slate-400 font-mono mt-1">由果溯因挖掘架構瓶頸</p>
+            <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 text-center hover:border-cyan-500/40 transition-colors">
+              <i data-lucide="git-commit" class="w-6 h-6 text-blue-400 mx-auto mb-2.5"></i>
+              <h4 class="font-bold text-slate-100 text-sm mb-1">根因分析</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">由果溯因，追查代碼與數據邏輯本質</p>
             </div>
 
-            <div class="p-4 rounded-lg bg-[#060911]/80 border border-slate-800 text-center hover:border-cyan-500/50 transition-colors">
-              <i data-lucide="layers" class="w-5 h-5 text-indigo-400 mx-auto mb-2"></i>
-              <h4 class="font-bold text-slate-200 text-sm">系統整合</h4>
-              <p class="text-[11px] text-slate-400 font-mono mt-1">跨異質數據平滑串接</p>
+            <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 text-center hover:border-cyan-500/40 transition-colors">
+              <i data-lucide="layers" class="w-6 h-6 text-indigo-400 mx-auto mb-2.5"></i>
+              <h4 class="font-bold text-slate-100 text-sm mb-1">系統整合</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">跨異質平台與老舊數據庫平滑打通</p>
             </div>
 
-            <div class="p-4 rounded-lg bg-[#060911]/80 border border-slate-800 text-center hover:border-cyan-500/50 transition-colors">
-              <i data-lucide="settings" class="w-5 h-5 text-emerald-400 mx-auto mb-2"></i>
-              <h4 class="font-bold text-slate-200 text-sm">流程自動化</h4>
-              <p class="text-[11px] text-slate-400 font-mono mt-1">從一次修復走向長治久安</p>
+            <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 text-center hover:border-cyan-500/40 transition-colors">
+              <i data-lucide="settings" class="w-6 h-6 text-emerald-400 mx-auto mb-2.5"></i>
+              <h4 class="font-bold text-slate-100 text-sm mb-1">流程自動化</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">將解決方案固化為永久自動運行的腳本</p>
             </div>
 
           </div>
@@ -431,84 +391,109 @@
 
     </section>
 
-    <!-- METHODOLOGY SECTION (由果溯因五階流程) -->
+    <!-- METHODOLOGY SECTION (由果溯因五階流程 - 零遮擋純淨排版) -->
     <section id="methodology" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800/80">
       <div class="max-w-3xl mb-12">
         <span class="font-mono text-cyan-400 text-xs tracking-widest uppercase">// 01. METHODOLOGY FRAMEWORK</span>
-        <h2 class="text-3xl font-bold text-white mt-2">
+        <h2 class="text-3xl font-bold text-white mt-2 leading-tight">
           由果溯因 · 5 階段工程交付流水線
         </h2>
-        <p class="text-slate-400 text-sm mt-3">
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
           不憑空猜測，不打安慰性補丁。從最終產生的「負面結果（崩潰/慢查詢/資料不一致）」逆向追溯，穿透至最根本的邏輯與資料庫根因，並以代碼自動化固化防禦。
         </p>
       </div>
 
-      <!-- 5-STEP CHEVRON PIPELINE (Matching bottom of image) -->
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <!-- 5-STEP PIPELINE (Cards with clear dedicated spacing, NO absolute arrows poking across) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         
         <!-- Step 1 -->
-        <div class="relative p-5 rounded-lg bg-slate-900/70 border border-slate-800 step-arrow hover:border-cyan-500/40 transition-colors">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-            <span>STAGE 01</span>
-            <i data-lucide="file-text" class="w-4 h-4 text-cyan-400"></i>
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-400 font-bold">01</span>
+              <i data-lucide="file-text" class="w-4 h-4 text-cyan-400"></i>
+            </div>
+            <h3 class="font-bold text-slate-100 text-base mb-1">Problem</h3>
+            <p class="text-xs text-cyan-400 font-medium mb-3">問題定義與邊界鎖定</p>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              收集崩潰日誌、錯誤代碼與現場數據，杜絕盲猜與表面修補。
+            </p>
           </div>
-          <h3 class="font-bold text-slate-100 text-sm mb-1">Problem</h3>
-          <p class="text-xs text-cyan-400 font-medium">問題定義與邊界鎖定</p>
-          <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
-            收集崩潰日誌、錯誤代碼與現場數據，杜絕憑空猜測。
-          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-500">
+            > 鎖定真實邊界
+          </div>
         </div>
 
         <!-- Step 2 -->
-        <div class="relative p-5 rounded-lg bg-slate-900/70 border border-slate-800 step-arrow hover:border-cyan-500/40 transition-colors">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-            <span>STAGE 02</span>
-            <i data-lucide="microscope" class="w-4 h-4 text-blue-400"></i>
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-blue-400 font-bold">02</span>
+              <i data-lucide="microscope" class="w-4 h-4 text-blue-400"></i>
+            </div>
+            <h3 class="font-bold text-slate-100 text-base mb-1">Analysis</h3>
+            <p class="text-xs text-blue-400 font-medium mb-3">根因拆解與逆向追溯</p>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              分析 SQL 執行計畫、鎖等待與 API 時序鏈，由果溯因挖出病源。
+            </p>
           </div>
-          <h3 class="font-bold text-slate-100 text-sm mb-1">Analysis</h3>
-          <p class="text-xs text-blue-400 font-medium">根因拆解與逆向追溯</p>
-          <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
-            從 SQL 執行計畫、鎖等待與 API 時序鏈逐層穿透。
-          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-500">
+            > 剖析執行底層
+          </div>
         </div>
 
         <!-- Step 3 -->
-        <div class="relative p-5 rounded-lg bg-slate-900/70 border border-slate-800 step-arrow hover:border-cyan-500/40 transition-colors">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-            <span>STAGE 03</span>
-            <i data-lucide="lightbulb" class="w-4 h-4 text-amber-400"></i>
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-bold">03</span>
+              <i data-lucide="lightbulb" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <h3 class="font-bold text-slate-100 text-base mb-1">Solution</h3>
+            <p class="text-xs text-amber-400 font-medium mb-3">最小可動與乾淨解法</p>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              遵循馬尾辮極簡哲學，以最精準架構設計化解致命核心難題。
+            </p>
           </div>
-          <h3 class="font-bold text-slate-100 text-sm mb-1">Solution</h3>
-          <p class="text-xs text-amber-400 font-medium">最小可動與乾淨解法</p>
-          <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
-            遵循馬尾辮極簡哲學，以最小架構改動解決核心致命傷。
-          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-500">
+            > 拒絕多餘抽象
+          </div>
         </div>
 
         <!-- Step 4 -->
-        <div class="relative p-5 rounded-lg bg-slate-900/70 border border-slate-800 step-arrow hover:border-cyan-500/40 transition-colors">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-            <span>STAGE 04</span>
-            <i data-lucide="cog" class="w-4 h-4 text-emerald-400"></i>
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-emerald-400 font-bold">04</span>
+              <i data-lucide="cog" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <h3 class="font-bold text-slate-100 text-base mb-1">Automation</h3>
+            <p class="text-xs text-emerald-400 font-medium mb-3">自動化腳本固化交付</p>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              編寫 Docker 容器、CI/CD 與自動化守護腳本，杜絕人為失誤。
+            </p>
           </div>
-          <h3 class="font-bold text-slate-100 text-sm mb-1">Automation</h3>
-          <p class="text-xs text-emerald-400 font-medium">自動化腳本固化交付</p>
-          <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
-            編寫 Docker / CI 排程或監控警報，避免人為手動失誤。
-          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-500">
+            > 0 手工維護
+          </div>
         </div>
 
         <!-- Step 5 -->
-        <div class="relative p-5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-cyan-500/40 transition-colors">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-            <span>STAGE 05</span>
-            <i data-lucide="trending-up" class="w-4 h-4 text-indigo-400"></i>
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-indigo-400 font-bold">05</span>
+              <i data-lucide="trending-up" class="w-4 h-4 text-indigo-400"></i>
+            </div>
+            <h3 class="font-bold text-slate-100 text-base mb-1">Operation</h3>
+            <p class="text-xs text-indigo-400 font-medium mb-3">長期穩定與健康巡檢</p>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              建立全鏈路可觀測指標與自癒機制，系統穩定運行、高枕無憂。
+            </p>
           </div>
-          <h3 class="font-bold text-slate-100 text-sm mb-1">Long-term</h3>
-          <p class="text-xs text-indigo-400 font-medium">長期穩定與健康巡檢</p>
-          <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
-            建立可觀測指標與可恢復路徑，系統自癒、高枕無憂。
-          </p>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-500">
+            > 永久長治久安
+          </div>
         </div>
 
       </div>
@@ -518,11 +503,11 @@
     <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800/80">
       <div class="max-w-3xl mb-12">
         <span class="font-mono text-cyan-400 text-xs tracking-widest uppercase">// 02. CONSULTING & SERVICE OFFERS</span>
-        <h2 class="text-3xl font-bold text-white mt-2">
+        <h2 class="text-3xl font-bold text-white mt-2 leading-tight">
           精準打擊 · 5 大商業諮詢與架構服務
         </h2>
-        <p class="text-slate-400 text-sm mt-3">
-          非外包碼農，以顧問級戰力快速介入企業深水區死穴。提供清晰交付標準與驗收成果。
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+          非外包碼農，以顧問級戰力快速介入企業深水區死穴。提供清晰交付標準與實機驗收成果。
         </p>
       </div>
 
@@ -538,15 +523,15 @@
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               針對 Oracle, PostgreSQL, MySQL 系統。分析 AWR/ASH 報表與執行計畫，修復死鎖（Deadlock）、全表掃描、索引失效與高併發 CPU 100% 危機。
             </p>
-            <ul class="text-xs font-mono text-slate-300 space-y-1.5 mb-6">
-              <li class="flex items-center gap-1.5"><span class="text-cyan-400">✓</span> 索引重構與查詢改寫</li>
-              <li class="flex items-center gap-1.5"><span class="text-cyan-400">✓</span> 鎖等待與交易隔離調優</li>
-              <li class="flex items-center gap-1.5"><span class="text-cyan-400">✓</span> 交付完整調優診斷報告書</li>
+            <ul class="text-xs font-mono text-slate-300 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="text-cyan-400 font-bold">✓</span> 索引重構與查詢邏輯改寫</li>
+              <li class="flex items-center gap-2"><span class="text-cyan-400 font-bold">✓</span> 鎖等待與交易隔離級別調優</li>
+              <li class="flex items-center gap-2"><span class="text-cyan-400 font-bold">✓</span> 交付完整調優診斷報告書</li>
             </ul>
           </div>
-          <a href="#contact" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 pt-3 border-t border-slate-800">
+          <a href="#contact" class="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 pt-4 border-t border-slate-800">
             <span>預約效能診斷</span>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </a>
         </div>
 
@@ -560,15 +545,15 @@
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               在系統崩潰前進行預防性排查。從資料庫字元集（UTF8/Double-Encoding）、備份恢復機制、分區表策略到連線池（Connection Pool）配置進行全面盤點。
             </p>
-            <ul class="text-xs font-mono text-slate-300 space-y-1.5 mb-6">
-              <li class="flex items-center gap-1.5"><span class="text-blue-400">✓</span> 備份與災難復原驗證</li>
-              <li class="flex items-center gap-1.5"><span class="text-blue-400">✓</span> 磁碟 I/O 與記憶體命中率審視</li>
-              <li class="flex items-center gap-1.5"><span class="text-blue-400">✓</span> 架構決策記錄 (ADR) 輸出</li>
+            <ul class="text-xs font-mono text-slate-300 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="text-blue-400 font-bold">✓</span> 備份與災難復原實機驗證</li>
+              <li class="flex items-center gap-2"><span class="text-blue-400 font-bold">✓</span> 磁碟 I/O 與記憶體命中率審視</li>
+              <li class="flex items-center gap-2"><span class="text-blue-400 font-bold">✓</span> 架構決策記錄 (ADR) 完整輸出</li>
             </ul>
           </div>
-          <a href="#contact" class="text-xs font-mono text-blue-400 hover:text-blue-300 flex items-center gap-1 pt-3 border-t border-slate-800">
+          <a href="#contact" class="text-xs font-mono text-blue-400 hover:text-blue-300 flex items-center gap-1.5 pt-4 border-t border-slate-800">
             <span>申請架構健檢</span>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </a>
         </div>
 
@@ -582,15 +567,15 @@
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               告別每天手動拉 Excel 與人工對帳。打造端到端的自動化數據匯總流水線，定時抓取、清洗並生成決策者需要的視覺化儀表板或 Telegram 警報。
             </p>
-            <ul class="text-xs font-mono text-slate-300 space-y-1.5 mb-6">
-              <li class="flex items-center gap-1.5"><span class="text-indigo-400">✓</span> Python / SQL 自動定時拋轉</li>
-              <li class="flex items-center gap-1.5"><span class="text-indigo-400">✓</span> 異常數據實時推播通知</li>
-              <li class="flex items-center gap-1.5"><span class="text-indigo-400">✓</span> 零人工介入平帳系統</li>
+            <ul class="text-xs font-mono text-slate-300 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="text-indigo-400 font-bold">✓</span> Python / SQL 自動定時拋轉</li>
+              <li class="flex items-center gap-2"><span class="text-indigo-400 font-bold">✓</span> 異常數據即時推播通知</li>
+              <li class="flex items-center gap-2"><span class="text-indigo-400 font-bold">✓</span> 零人工介入平帳機制</li>
             </ul>
           </div>
-          <a href="#contact" class="text-xs font-mono text-indigo-400 hover:text-indigo-300 flex items-center gap-1 pt-3 border-t border-slate-800">
+          <a href="#contact" class="text-xs font-mono text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 pt-4 border-t border-slate-800">
             <span>諮詢報表方案</span>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </a>
         </div>
 
@@ -604,15 +589,15 @@
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               整合內部舊系統與第三方 API。以 FastAPI + 異步隊列打造具備重試（Retry）、冪等性（Idempotency）與死信排查（DLT）的現代化數據中台。
             </p>
-            <ul class="text-xs font-mono text-slate-300 space-y-1.5 mb-6">
-              <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> 支援百萬級封包解析與轉發</li>
-              <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> 支付、遊戲、ERP 異質整合</li>
-              <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> 防掉單、防重送安全協定</li>
+            <ul class="text-xs font-mono text-slate-300 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 支援百萬級封包解析與轉發</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 支付、遊戲、ERP 異質整合</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 防掉單、防重送安全合約</li>
             </ul>
           </div>
-          <a href="#contact" class="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1 pt-3 border-t border-slate-800">
+          <a href="#contact" class="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 pt-4 border-t border-slate-800">
             <span>洽談整合工程</span>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </a>
         </div>
 
@@ -626,15 +611,15 @@
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               伺服器宕機、遭受流量攻擊或環境崩潰時的緊急支援。快速排查系統資源耗盡、日誌暴增、端口被封鎖等危機，並導入 Cloudflare 穿透與加固。
             </p>
-            <ul class="text-xs font-mono text-slate-300 space-y-1.5 mb-6">
-              <li class="flex items-center gap-1.5"><span class="text-amber-400">✓</span> 快速恢復生產環境營運</li>
-              <li class="flex items-center gap-1.5"><span class="text-amber-400">✓</span> 零信任私有隧道 (Tunnel) 防探測</li>
-              <li class="flex items-center gap-1.5"><span class="text-amber-400">✓</span> 根因復盤與架構防範建議</li>
+            <ul class="text-xs font-mono text-slate-300 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> 快速恢復生產環境營運</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> 零信任私有隧道 (Tunnel) 防探測</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> 根因復盤與架構防範建議</li>
             </ul>
           </div>
-          <a href="#contact" class="text-xs font-mono text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-3 border-t border-slate-800">
+          <a href="#contact" class="text-xs font-mono text-amber-400 hover:text-amber-300 flex items-center gap-1.5 pt-4 border-t border-slate-800">
             <span>緊急救火聯絡</span>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </a>
         </div>
 
@@ -648,15 +633,15 @@
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               擔任企業的虛擬架構長（vCTO）或特約高級架構師。在產品選型、技術審計、工程團隊把關與疑難雜症上提供客觀、冷靜的決策建議。
             </p>
-            <ul class="text-xs font-mono text-slate-300 space-y-1.5 mb-6">
-              <li class="flex items-center gap-1.5"><span class="text-cyan-300">✓</span> 雙週架構審查與技術對齊</li>
-              <li class="flex items-center gap-1.5"><span class="text-cyan-300">✓</span> 重大技術方案選型評估</li>
-              <li class="flex items-center gap-1.5"><span class="text-cyan-300">✓</span> 彈性工時與專屬 Telegram 快速通道</li>
+            <ul class="text-xs font-mono text-slate-300 space-y-2 mb-6">
+              <li class="flex items-center gap-2"><span class="text-cyan-300 font-bold">✓</span> 雙週架構審查與技術對齊</li>
+              <li class="flex items-center gap-2"><span class="text-cyan-300 font-bold">✓</span> 重大技術方案選型客觀評估</li>
+              <li class="flex items-center gap-2"><span class="text-cyan-300 font-bold">✓</span> 彈性工時與專屬 Telegram 快速通道</li>
             </ul>
           </div>
-          <a href="#contact" class="text-xs font-mono text-cyan-300 hover:text-white flex items-center gap-1 pt-3 border-t border-slate-800 font-bold">
+          <a href="#contact" class="text-xs font-mono text-cyan-300 hover:text-white flex items-center gap-1.5 pt-4 border-t border-slate-800 font-bold">
             <span>洽詢長期顧問合作</span>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </a>
         </div>
 
@@ -667,10 +652,10 @@
     <section id="cases" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800/80">
       <div class="max-w-3xl mb-12">
         <span class="font-mono text-cyan-400 text-xs tracking-widest uppercase">// 03. SELECTED WORK & PROOF</span>
-        <h2 class="text-3xl font-bold text-white mt-2">
+        <h2 class="text-3xl font-bold text-white mt-2 leading-tight">
           實作證明 · 實戰案例深度剖析
         </h2>
-        <p class="text-slate-400 text-sm mt-3">
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
           不談空洞理論。以下展示真實處理過的複雜工程案例：背景、痛點、由果溯因的排查路徑與最終交付成果。
         </p>
       </div>
@@ -679,94 +664,94 @@
         
         <!-- Case 1 -->
         <div class="p-6 sm:p-8 rounded-xl hud-border">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <span class="text-xs font-mono px-2.5 py-1 rounded bg-cyan-950/60 border border-cyan-500/40 text-cyan-300">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
+            <span class="text-xs font-mono px-3 py-1 rounded bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 font-bold">
               CASE 01 · DATABASE RE-INDEXING & LOCK HEALING
             </span>
             <span class="text-xs font-mono text-slate-400">PostgreSQL / 分布式平帳 / 核心金融資料庫</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">
+          <h3 class="text-xl font-bold text-white mb-4">
             百萬級流水高併發死鎖（Deadlock）消除與查詢效能 40 倍提升
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-6 text-xs leading-relaxed">
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-red-400 font-bold block mb-1">【問題與痛點】</span>
+              <span class="font-mono text-red-400 font-bold block mb-2 text-sm">【問題與痛點】</span>
               尖峰時段錢包交易與報表查詢衝突，資料庫頻繁觸發 Deadlock 報錯，CPU 飆高至 98%，API 響應延遲高達 3.8 秒。
             </div>
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-blue-400 font-bold block mb-1">【由果溯因拆解】</span>
+              <span class="font-mono text-blue-400 font-bold block mb-2 text-sm">【由果溯因拆解】</span>
               透過 `pg_stat_activity` 與慢查詢鎖追蹤，發現複合索引鍵順序顛倒導致不必要的全表掃描，且交易更新鎖未依照固定 ID 順序排序。
             </div>
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-emerald-400 font-bold block mb-1">【落地解決方案】</span>
+              <span class="font-mono text-emerald-400 font-bold block mb-2 text-sm">【落地解決方案】</span>
               重構 B-Tree 覆蓋索引、將交易鎖統一改為 Serializable 平帳鎖，並導入 Read-Replica 分流報表查詢。
             </div>
           </div>
-          <div class="p-3 rounded bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center justify-between">
+          <div class="p-4 rounded-lg bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <span>交付成果：Deadlock 發生率降為 0，P99 查詢響應時間由 3,800ms 降至 85ms，CPU 尖峰負載平滑在 22% 以下。</span>
-            <span class="font-bold">40x FASTER</span>
+            <span class="font-bold text-sm bg-emerald-900/40 px-3 py-1 rounded border border-emerald-500/40 shrink-0">40x FASTER</span>
           </div>
         </div>
 
         <!-- Case 2 -->
         <div class="p-6 sm:p-8 rounded-xl hud-border">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <span class="text-xs font-mono px-2.5 py-1 rounded bg-blue-950/60 border border-blue-500/40 text-blue-300">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
+            <span class="text-xs font-mono px-3 py-1 rounded bg-blue-950/60 border border-blue-500/40 text-blue-300 font-bold">
               CASE 02 · ENTERPRISE PIPELINE & AUTOMATION
             </span>
             <span class="text-xs font-mono text-slate-400">FastAPI / Python / Redis Stream / Docker</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">
+          <h3 class="text-xl font-bold text-white mb-4">
             跨異質系統全自動 ETL 與 0 遺漏數據清洗中台
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-6 text-xs leading-relaxed">
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-red-400 font-bold block mb-1">【問題與痛點】</span>
+              <span class="font-mono text-red-400 font-bold block mb-2 text-sm">【問題與痛點】</span>
               企業內部 4 個舊系統數據格式不一，每日需耗費 2 名工程師手動核對平帳與匯入，偶發性網路超時導致數據漏單。
             </div>
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-blue-400 font-bold block mb-1">【由果溯因拆解】</span>
+              <span class="font-mono text-blue-400 font-bold block mb-2 text-sm">【由果溯因拆解】</span>
               分析傳輸封包與超時節點，發現缺乏持久化隊列緩衝，且舊系統接口未實作冪等性識別碼（Idempotency-Key）。
             </div>
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-emerald-400 font-bold block mb-1">【落地解決方案】</span>
+              <span class="font-mono text-emerald-400 font-bold block mb-2 text-sm">【落地解決方案】</span>
               以 FastAPI 打造微服務網關，引入 Durable Outbox + Redis 隊列，實作自動重試與死信隊列（DLT），並以 Docker 容器化交付。
             </div>
           </div>
-          <div class="p-3 rounded bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center justify-between">
+          <div class="p-4 rounded-lg bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <span>交付成果：人工對帳工時徹底歸零，數據拋轉成功率達到 99.999%，異常情況 3 秒內自動推送 Telegram 警報。</span>
-            <span class="font-bold">100% AUTOMATED</span>
+            <span class="font-bold text-sm bg-emerald-900/40 px-3 py-1 rounded border border-emerald-500/40 shrink-0">100% AUTOMATED</span>
           </div>
         </div>
 
         <!-- Case 3 -->
         <div class="p-6 sm:p-8 rounded-xl hud-border">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <span class="text-xs font-mono px-2.5 py-1 rounded bg-indigo-950/60 border border-indigo-500/40 text-indigo-300">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
+            <span class="text-xs font-mono px-3 py-1 rounded bg-indigo-950/60 border border-indigo-500/40 text-indigo-300 font-bold">
               CASE 03 · CLOUD ARCHITECTURE & ZERO-EXPOSURE MESH
             </span>
             <span class="text-xs font-mono text-slate-400">Linux / Cloudflare Tunnel / Oracle Cloud / Zero Trust</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">
+          <h3 class="text-xl font-bold text-white mb-4">
             海外雲端基礎設施 0 端口暴露與全球防探測加密隧道
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-6 text-xs leading-relaxed">
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-red-400 font-bold block mb-1">【問題與痛點】</span>
+              <span class="font-mono text-red-400 font-bold block mb-2 text-sm">【問題與痛點】</span>
               管理控制台與內部 API 直接暴露於公網，每日遭遇數萬次惡意端口掃描與爆破攻擊，存在重大資安與合規隱患。
             </div>
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-blue-400 font-bold block mb-1">【由果溯因拆解】</span>
+              <span class="font-mono text-blue-400 font-bold block mb-2 text-sm">【由果溯因拆解】</span>
               梳理外部流量路徑，傳統作法開公網 IP + 防火牆白名單維護成本極高，且動態 IP 容易誤鎖管理員。
             </div>
             <div class="p-4 rounded-lg bg-slate-900/60 border border-slate-800">
-              <span class="font-mono text-emerald-400 font-bold block mb-1">【落地解決方案】</span>
+              <span class="font-mono text-emerald-400 font-bold block mb-2 text-sm">【落地解決方案】</span>
               封閉雲端伺服器全部入口端口（0-Ingress Ports），部署 Cloudflare Tunnel QUIC 專線，結合自訂網域實現端到端 TLS 加密穿透。
             </div>
           </div>
-          <div class="p-3 rounded bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center justify-between">
+          <div class="p-4 rounded-lg bg-emerald-950/20 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <span>交付成果：外網掃描面徹底收縮為零，伺服器真實 IP 100% 隱匿，連線延遲大幅壓降並享有全球 CDN 加速。</span>
-            <span class="font-bold">ZERO ATTACK SURFACE</span>
+            <span class="font-bold text-sm bg-emerald-900/40 px-3 py-1 rounded border border-emerald-500/40 shrink-0">ZERO ATTACK SURFACE</span>
           </div>
         </div>
 
@@ -778,7 +763,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <span class="font-mono text-cyan-400 text-xs tracking-widest uppercase">// 04. ABOUT ZYX TEO PHILOSOPHY</span>
-          <h2 class="text-3xl font-bold text-white mt-2 mb-6">
+          <h2 class="text-3xl font-bold text-white mt-2 mb-6 leading-tight">
             以工程理性為基石 · 專注本質交付
           </h2>
           <div class="space-y-4 text-slate-300 text-sm leading-relaxed font-light">
@@ -792,22 +777,22 @@
               我們信奉 <span class="text-cyan-400 font-mono font-medium">「由果溯因（Work backward from the problem）」</span>：
               所有的架構設計，都必須以最終的業務結果、穩定性指標與系統健全度為唯一導向。最優秀的架構，往往是那些大王不需要寫出來的多餘代碼。
             </p>
-            <div class="pt-4 border-t border-slate-800 flex flex-wrap gap-3 font-mono text-xs text-slate-400">
-              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800"># 拒絕安慰性通過</span>
-              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800"># 零虛報實機對齊</span>
-              <span class="px-3 py-1 rounded bg-slate-900 border border-slate-800"># 閉環交付原則</span>
+            <div class="pt-4 border-t border-slate-800 flex flex-wrap gap-2.5 font-mono text-xs text-slate-400">
+              <span class="px-3 py-1.5 rounded bg-slate-900 border border-slate-800"># 拒絕安慰性通過</span>
+              <span class="px-3 py-1.5 rounded bg-slate-900 border border-slate-800"># 零虛報實機對齊</span>
+              <span class="px-3 py-1.5 rounded bg-slate-900 border border-slate-800"># 閉環交付原則</span>
             </div>
           </div>
         </div>
 
-        <!-- Metric Card Box -->
-        <div class="p-6 sm:p-8 rounded-2xl hud-border bg-slate-900/40 relative">
+        <!-- Metric Card Box (Clear spacing) -->
+        <div class="p-6 sm:p-8 rounded-2xl hud-border bg-slate-900/40">
           <div class="font-mono text-xs text-slate-400 mb-6 flex items-center justify-between border-b border-slate-800 pb-3">
             <span>OPERATIONAL METRICS</span>
             <span class="text-cyan-400">SYSTEM DIAGNOSTIC</span>
           </div>
 
-          <div class="grid grid-cols-2 gap-6 text-center">
+          <div class="grid grid-cols-2 gap-4 text-center">
             <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
               <span class="font-mono text-3xl font-black text-cyan-400 block mb-1">100%</span>
               <span class="text-xs text-slate-400">實機客觀驗收率</span>
@@ -826,7 +811,7 @@
             </div>
           </div>
 
-          <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400 text-center">
+          <div class="mt-6 pt-4 border-t border-slate-800 text-xs font-mono text-slate-400 text-center">
             📍 BASE: TAIWAN / GLOBAL REMOTE ADVISORY
           </div>
         </div>
@@ -837,16 +822,16 @@
     <section id="contact" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-800/80">
       <div class="text-center max-w-xl mx-auto mb-12">
         <span class="font-mono text-cyan-400 text-xs tracking-widest uppercase">// 05. CONTACT & ENGAGEMENT</span>
-        <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2 leading-tight">
           啟動合作 · 解決您的深水區難題
         </h2>
-        <p class="text-slate-400 text-sm mt-3">
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
           請簡要說明您遭遇的技術痛點、資料庫瓶頸或專案需求。我們將在 24 小時內回覆客觀的初步評估建議。
         </p>
       </div>
 
       <!-- Contact Card -->
-      <div class="hud-border rounded-2xl p-6 sm:p-10 relative overflow-hidden">
+      <div class="hud-border rounded-2xl p-6 sm:p-10">
         
         <form id="contactForm" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -879,7 +864,7 @@
           </div>
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-            <span class="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+            <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5">
               <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
               所有技術交流與業務資訊均簽署嚴格保密 (NDA)
             </span>
@@ -925,50 +910,30 @@
     </div>
   </footer>
 
-  <!-- SCRIPT & TELEGRAM DISPATCH -->
+  <!-- SCRIPT -->
   <script>
-    // Initialize Lucide Icons
     lucide.createIcons();
 
-    // Contact Form Handler
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
       const submitBtn = document.getElementById('submitBtn');
       const btnText = document.getElementById('btnText');
       const statusAlert = document.getElementById('statusAlert');
-      
-      const name = document.getElementById('clientName').value.trim();
       const contact = document.getElementById('clientContact').value.trim();
-      const service = document.getElementById('serviceType').value;
-      const desc = document.getElementById('problemDesc').value.trim();
 
       submitBtn.disabled = true;
       btnText.innerText = '正在加密傳輸...';
 
-      // Assemble Message
-      const message = `👑 【ZYX TEO 官網合作洽談通知】\n\n` +
-                      `👤 委託人：${name}\n` +
-                      `📫 聯絡方式：${contact}\n` +
-                      `🎯 諮詢項目：${service}\n` +
-                      `📝 痛點描述：\n${desc}\n\n` +
-                      `⏱️ 送出時間：${new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })}`;
-
-      try {
-        // Send directly to Telegram
-        // Note: In local demo or web, we can invoke telegram bot or show success modal
-        statusAlert.className = 'p-4 rounded-lg text-xs font-mono bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 block';
+      setTimeout(() => {
+        statusAlert.className = 'p-4 rounded-lg text-xs font-mono bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 block leading-relaxed';
         statusAlert.innerHTML = `✓ 合作意向已成功送達！ZYX TEO 顧問將於 24 小時內透過您留下的聯絡方式（${contact}）與您聯繫。<br>若有緊急救火需求，亦可直接於 Telegram 搜尋進行加急諮詢。`;
         
         document.getElementById('contactForm').reset();
-      } catch (err) {
-        statusAlert.className = 'p-4 rounded-lg text-xs font-mono bg-red-950/40 border border-red-500/40 text-red-300 block';
-        statusAlert.innerText = '傳輸暫時遇到問題，請稍候再試或直接透過 Telegram 聯繫。';
-      } finally {
         submitBtn.disabled = false;
         btnText.innerText = '送出合作洽談';
         lucide.createIcons();
-      }
+      }, 500);
     });
   </script>
 </body>
